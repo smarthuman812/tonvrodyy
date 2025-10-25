@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTonWallet } from 'tonconnect-ui-react';
+import { useTonWallet } from '@tonconnect/ui-react';
 
 /**
  * Wallet page displays wallet connection state and address using TON Connect.

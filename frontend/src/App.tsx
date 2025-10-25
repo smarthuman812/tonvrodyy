@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import {
   TonConnectUIProvider,
-  ConnectButton,
-  useTonWallet,
-} from 'tonconnect-ui-react';
+  TonConnectButton,
+  useTonWallet
+} from '@tonconnect/ui-react';
 import Home from './pages/Home';
 import Lobby from './pages/Lobby';
 import Wallet from './pages/Wallet';
@@ -39,7 +39,7 @@ const App: React.FC = () => {
         </nav>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {username && <span>Hello, {username}</span>}
-          <ConnectButton />
+          <TonConnectButton />
         </div>
       </header>
       <main style={{ padding: '1rem' }}>

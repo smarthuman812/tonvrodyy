@@ -1,5 +1,7 @@
 import { createHmac } from 'crypto';
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Initialize a Supabase client using service-level key. Do not persist sessions.
 const supabase = createClient(

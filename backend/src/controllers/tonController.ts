@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 /**
  * Handle incoming TON Connect webhook events. Depending on the event type, you might
  * update transaction status, credit user balances, or trigger referral bonuses.
