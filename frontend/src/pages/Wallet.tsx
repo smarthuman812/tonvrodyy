@@ -1,23 +1,60 @@
-import React from 'react';
-import { useTonWallet } from '@tonconnect/ui-react';
+import React from "react";
+import { Box, VStack, Text, Button, Divider } from "@chakra-ui/react";
+import { useTonWallet } from "@tonconnect/ui-react";
 
-/**
- * Wallet page displays wallet connection state and address using TON Connect.
- */
 const WalletPage: React.FC = () => {
   const wallet = useTonWallet();
+
   return (
-    <div>
-      <h2>Your Wallet</h2>
-      {wallet ? (
-        <div>
-          <p>Connected wallet: {wallet.account.address}</p>
-          {/* Additional wallet actions such as deposit could be implemented here */}
-        </div>
-      ) : (
-        <p>Please connect your TON wallet using the button in the header.</p>
-      )}
-    </div>
+    <Box
+      minH="100vh"
+      bgGradient="linear(to-b, blackAlpha.900, gray.900)"
+      color="whiteAlpha.900"
+      p={6}
+    >
+      <VStack spacing={6} align="start" maxW="600px" mx="auto">
+        <Text fontSize="xl" fontWeight="bold">
+          Your Wallet
+        </Text>
+        {!wallet ? (
+          <Text color="gray.400">
+            Подключите TON-кошелёк с помощью кнопки в шапке.
+          </Text>
+        ) : (
+          <>
+            <Text fontSize="sm" color="gray.400">
+              Connected wallet:
+            </Text>
+            <Text fontSize="md" fontWeight="semibold">
+              {wallet.account.address}
+            </Text>
+            <Divider borderColor="gray.700" />
+
+            <Text fontSize="sm" color="gray.400">
+              Баланс:
+            </Text>
+            <Text fontSize="lg" fontWeight="bold">
+              0.00 TON
+            </Text>
+
+            <Divider borderColor="gray.700" />
+            <Text fontSize="sm" color="gray.400">
+              История операций
+            </Text>
+            <VStack align="start" spacing={2} fontSize="sm" color="gray.500">
+              <Text>• Ставка: 1 TON</Text>
+              <Text>• Пополнение: 5 TON</Text>
+              <Text>• Вывод: 2 TON</Text>
+            </VStack>
+
+            <Divider borderColor="gray.700" />
+            <Text fontSize="sm" color="gray.400">
+              Рефералы: 0 | TNRD ID: #0001
+            </Text>
+          </>
+        )}
+      </VStack>
+    </Box>
   );
 };
 
