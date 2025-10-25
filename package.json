@@ -2,6 +2,10 @@
   "name": "tonvrodyy",
   "private": true,
   "version": "1.0.0",
+    "engines": {
+    "node": "18.20.3"
+  },
+    
   "workspaces": [
     "backend",
     "frontend",
