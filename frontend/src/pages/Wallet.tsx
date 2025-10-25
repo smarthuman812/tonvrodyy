@@ -1,58 +1,61 @@
 import React from "react";
-import { Box, VStack, Text, Button, Divider } from "@chakra-ui/react";
-import { useTonWallet } from "@tonconnect/ui-react";
+import { motion } from "framer-motion";
+import { Box, VStack, Text, Button, SimpleGrid } from "@chakra-ui/react";
+import "../styles/visual-layer.css";
+
+const MotionBox = motion(Box);
 
 const WalletPage: React.FC = () => {
-  const wallet = useTonWallet();
-
   return (
-    <Box
-      minH="100vh"
-      bgGradient="linear(to-b, blackAlpha.900, gray.900)"
-      color="whiteAlpha.900"
-      p={6}
-    >
-      <VStack spacing={6} align="start" maxW="600px" mx="auto">
-        <Text fontSize="xl" fontWeight="bold">
-          Your Wallet
-        </Text>
-        {!wallet ? (
-          <Text color="gray.400">
-            Подключите TON-кошелёк с помощью кнопки в шапке.
+    <Box minH="100vh" p={8}>
+      <VStack spacing={8}>
+        <MotionBox
+          className="card-ton"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          p={8}
+          textAlign="center"
+        >
+          <Text fontSize="3xl" fontWeight="bold" mb={4}>
+            <img src="/icons/ton-logo.svg" className="ton-icon" />
+            Wallet Balance
           </Text>
-        ) : (
-          <>
-            <Text fontSize="sm" color="gray.400">
-              Connected wallet:
-            </Text>
-            <Text fontSize="md" fontWeight="semibold">
-              {wallet.account.address}
-            </Text>
-            <Divider borderColor="gray.700" />
+          <Text fontSize="2xl" mb={6}>
+            <span style={{ color: "#00BFFF" }}>15.37 TON</span>
+          </Text>
+          <Button className="neon-glow" w="full" mb={3}>
+            Deposit
+          </Button>
+          <Button variant="outline" className="neon-glow" w="full">
+            Withdraw
+          </Button>
+        </MotionBox>
 
-            <Text fontSize="sm" color="gray.400">
-              Баланс:
-            </Text>
-            <Text fontSize="lg" fontWeight="bold">
-              0.00 TON
-            </Text>
-
-            <Divider borderColor="gray.700" />
-            <Text fontSize="sm" color="gray.400">
-              История операций
-            </Text>
-            <VStack align="start" spacing={2} fontSize="sm" color="gray.500">
-              <Text>• Ставка: 1 TON</Text>
-              <Text>• Пополнение: 5 TON</Text>
-              <Text>• Вывод: 2 TON</Text>
-            </VStack>
-
-            <Divider borderColor="gray.700" />
-            <Text fontSize="sm" color="gray.400">
-              Рефералы: 0 | TNRD ID: #0001
-            </Text>
-          </>
-        )}
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} w="full">
+          {[
+            { title: "Total Bets", value: "124 TON" },
+            { title: "Total Wins", value: "190 TON" },
+            { title: "Net Profit", value: "+66 TON" },
+          ].map((stat) => (
+            <MotionBox
+              key={stat.title}
+              className="card-ton"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              p={6}
+              textAlign="center"
+            >
+              <Text fontWeight="bold" color="#00BFFF">
+                {stat.title}
+              </Text>
+              <Text fontSize="xl" mt={2}>
+                {stat.value}
+              </Text>
+            </MotionBox>
+          ))}
+        </SimpleGrid>
       </VStack>
     </Box>
   );

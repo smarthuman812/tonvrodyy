@@ -1,0 +1,67 @@
+/* === TONRODY Visual Layer v4 — Plasma Field === */
+
+body {
+  background: radial-gradient(circle at 50% 50%, #050505, #000000 90%);
+  background-attachment: fixed;
+  overflow: hidden;
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* === Базовый шум для глубины === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/textures/noise.png");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === Контейнер частиц === */
+.sparks-field {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* === Частица (одна точка) === */
+.spark {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(0.6px);
+  animation: moveSpark linear infinite;
+}
+
+/* === Цветовые вариации === */
+.spark.red {
+  background: rgba(255, 40, 40, 0.8);
+  box-shadow: 0 0 6px rgba(255, 40, 40, 0.6);
+}
+.spark.orange {
+  background: rgba(255, 120, 40, 0.8);
+  box-shadow: 0 0 6px rgba(255, 120, 40, 0.6);
+}
+.spark.white {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+/* === Движение === */
+@keyframes moveSpark {
+  0% {
+    transform: translate(var(--x-start), var(--y-start)) scale(1);
+  }
+  50% {
+    transform: translate(var(--x-mid), var(--y-mid)) scale(1.2);
+  }
+  100% {
+    transform: translate(var(--x-end), var(--y-end)) scale(1);
+  }
+}

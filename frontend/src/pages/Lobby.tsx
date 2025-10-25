@@ -1,183 +1,95 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Box,
   VStack,
-  HStack,
   Text,
   Button,
-  Select,
-  useToast,
-  IconButton,
+  HStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-interface Lobby {
-  id: string;
-  type: string;
-  max_players: number;
-  bet: number;
-  prize: number;
-  status: string;
-}
-
-const lobbyTypes = [
-  { label: "10 участников — 0.5 TON", max_players: 10, bet: 0.5, prize: 5 },
-  { label: "15 участников — 1 TON", max_players: 15, bet: 1, prize: 15 },
-  { label: "30 участников — 2 TON", max_players: 30, bet: 2, prize: 60 },
-];
+const MotionBox = motion(Box);
 
 const LobbyPage: React.FC = () => {
-  const [lobbies, setLobbies] = useState<Lobby[]>([]);
-  const [selectedType, setSelectedType] = useState(lobbyTypes[0]);
-  const toast = useToast();
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [selected, setSelected] = useState<number | null>(null);
+  const cardBg = useColorModeValue("rgba(255,255,255,0.04)", "rgba(255,255,255,0.04)");
+  const borderColor = useColorModeValue("rgba(255,255,255,0.08)", "rgba(255,255,255,0.08)");
 
-  useEffect(() => {
-    const demo = [
-      { id: "1", type: "10 участников — 0.5 TON", max_players: 10, bet: 0.5, prize: 5, status: "waiting" },
-      { id: "2", type: "15 участников — 1 TON", max_players: 15, bet: 1, prize: 15, status: "active" },
-      { id: "3", type: "30 участников — 2 TON", max_players: 30, bet: 2, prize: 60, status: "finished" },
-    ];
-    setLobbies(demo);
-  }, []);
-
-  const handleCreateLobby = () => {
-    const newLobby: Lobby = {
-      id: String(Date.now()),
-      ...selectedType,
-      status: "waiting",
-      type: ""
-    };
-    setLobbies((prev) => [newLobby, ...prev]);
-    toast({ title: "Лобби создано", status: "success", duration: 2000 });
-  };
-
-  const scrollLeft = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
-  };
+  const lobbies = [
+    { id: 1, title: "Round 0.5 TON", players: "10", prize: "5 TON", status: "waiting" },
+    { id: 2, title: "Round 1 TON", players: "15", prize: "15 TON", status: "active" },
+    { id: 3, title: "Round 2 TON", players: "30", prize: "60 TON", status: "finished" },
+  ];
 
   return (
-    <Box
-      minH="100vh"
-      bgGradient="linear(to-b, blackAlpha.900, gray.900)"
-      color="whiteAlpha.900"
-      p={6}
-    >
-      <VStack spacing={6} align="center">
-        <Text fontSize="2xl" fontWeight="bold">
-          Available Lobbies
-        </Text>
-
-        {/* Создание лобби */}
-        <HStack spacing={3}>
-          <Select
-            value={selectedType.label}
-            onChange={(e) => {
-              const type = lobbyTypes.find((t) => t.label === e.target.value);
-              if (type) setSelectedType(type);
-            }}
-            bg="gray.800"
-            border="none"
-            w="260px"
-          >
-            {lobbyTypes.map((type) => (
-              <option key={type.label} value={type.label}>
-                {type.label}
-              </option>
-            ))}
-          </Select>
-          <Button colorScheme="teal" onClick={handleCreateLobby}>
-            Create Lobby
-          </Button>
-        </HStack>
-
-        {/* Карусель лобби */}
-        <HStack w="100%" justify="center" position="relative">
-          <IconButton
-            aria-label="scroll left"
-            icon={<ChevronLeftIcon />}
-            onClick={scrollLeft}
-            variant="ghost"
-            colorScheme="teal"
-            position="absolute"
-            left={0}
-            top="50%"
-            transform="translateY(-50%)"
-            zIndex={1}
-          />
-          <HStack
-            ref={scrollRef}
-            spacing={6}
-            overflowX="auto"
-            py={6}
-            px={10}
-            scrollSnapType="x mandatory"
-            css={{
-              "&::-webkit-scrollbar": { display: "none" },
-              scrollbarWidth: "none",
-            }}
-          >
-            {lobbies.map((lobby) => (
-              <Box
-                key={lobby.id}
-                flex="0 0 auto"
-                scrollSnapAlign="center"
-                w="280px"
-                h="240px"
-                p={5}
-                bg="gray.800"
-                borderRadius="md"
-                boxShadow="xl"
-                textAlign="center"
-                transition="transform 0.3s ease"
-                _hover={{ transform: "scale(1.07)", bg: "gray.700" }}
-              >
-                <VStack spacing={3}>
-                  <Text fontWeight="bold" fontSize="lg">
-                    {lobby.type}
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    Players: {lobby.max_players}
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    Bet: {lobby.bet} TON
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    Prize: {lobby.prize} TON
-                  </Text>
-                  <Text fontSize="sm" color="gray.400">
-                    Status: {lobby.status}
-                  </Text>
-                  <Button colorScheme="teal" size="sm">
-                    Play
-                  </Button>
-                </VStack>
-              </Box>
-            ))}
-          </HStack>
-          <IconButton
-            aria-label="scroll right"
-            icon={<ChevronRightIcon />}
-            onClick={scrollRight}
-            variant="ghost"
-            colorScheme="teal"
-            position="absolute"
-            right={0}
-            top="50%"
-            transform="translateY(-50%)"
-            zIndex={1}
-          />
-        </HStack>
-
-        {lobbies.length === 0 && (
-          <Text color="gray.500" mt={10}>
-            No lobbies found.
+    <Box minH="100vh" p={6}>
+      <VStack spacing={6}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Text fontSize="3xl" fontWeight="bold">
+            Available Lobbies
           </Text>
-        )}
+        </motion.div>
+
+        <HStack
+          spacing={6}
+          overflowX="auto"
+          py={6}
+          css={{ "&::-webkit-scrollbar": { display: "none" } }}
+        >
+          {lobbies.map((lobby, index) => (
+            <MotionBox
+              key={lobby.id}
+              onClick={() => setSelected(lobby.id)}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: selected === lobby.id ? 1.05 : 1 }}
+              transition={{ delay: index * 0.2 }}
+              bg={cardBg}
+              border={`1px solid ${borderColor}`}
+              borderRadius="16px"
+              p={6}
+              minW="250px"
+              boxShadow={selected === lobby.id ? "0 0 20px rgba(0,191,255,0.3)" : "none"}
+              cursor="pointer"
+              textAlign="center"
+            >
+              <Text fontWeight="bold" fontSize="lg" mb={1}>
+                {lobby.title}
+              </Text>
+              <Text fontSize="sm" color="gray.400">
+                Players: {lobby.players}
+              </Text>
+              <Text fontSize="sm" color="gray.400">
+                Prize: {lobby.prize}
+              </Text>
+              <Text
+                mt={2}
+                fontWeight="semibold"
+                color={
+                  lobby.status === "active"
+                    ? "green.400"
+                    : lobby.status === "waiting"
+                    ? "ton.400"
+                    : "red.400"
+                }
+              >
+                {lobby.status.toUpperCase()}
+              </Text>
+              <Button
+                mt={3}
+                colorScheme="ton"
+                size="sm"
+                onClick={() => console.log(`Join ${lobby.title}`)}
+              >
+                Join
+              </Button>
+            </MotionBox>
+          ))}
+        </HStack>
       </VStack>
     </Box>
   );
