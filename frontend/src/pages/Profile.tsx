@@ -11,20 +11,18 @@ interface Profile {
   created_at: string;
 }
 
-/**
- * Profile page displays information about the currently logged in user.
- */
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const userId = localStorage.getItem('user_id') || '00000000-0000-0000-0000-000000000000';
+  const userId =
+    localStorage.getItem('user_id') ||
+    '00000000-0000-0000-0000-000000000000';
 
   useEffect(() => {
     async function load() {
       try {
         const data = await api.getProfile(userId);
-        setProfile(data as unknown as Profile);
+        setProfile(data as Profile);
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.error(err);
       }
     }
@@ -53,7 +51,8 @@ const ProfilePage: React.FC = () => {
         <strong>Referral code:</strong> {profile.referral_code}
       </p>
       <p>
-        <strong>Joined at:</strong> {new Date(profile.created_at).toLocaleString()}
+        <strong>Joined at:</strong>{' '}
+        {new Date(profile.created_at).toLocaleString()}
       </p>
     </div>
   );

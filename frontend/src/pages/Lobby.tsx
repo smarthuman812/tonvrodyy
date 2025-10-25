@@ -12,9 +12,6 @@ interface Lobby {
   created_at: string;
 }
 
-/**
- * Lobby page displays all available lobbies and allows creation of new ones.
- */
 const LobbyPage: React.FC = () => {
   const [lobbies, setLobbies] = useState<Lobby[]>([]);
   const [name, setName] = useState('');
@@ -27,22 +24,21 @@ const LobbyPage: React.FC = () => {
   const refreshLobbies = async () => {
     try {
       const data = await api.getLobbies();
-      setLobbies(data as unknown as Lobby[]);
+      setLobbies(data as Lobby[]);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
     }
   };
 
   const handleCreate = async () => {
     try {
-      // In a real app you would obtain the creatorId from auth context
-      const creatorId = localStorage.getItem('user_id') || '00000000-0000-0000-0000-000000000000';
+      const creatorId =
+        localStorage.getItem('user_id') ||
+        '00000000-0000-0000-0000-000000000000';
       await api.createLobby(name, maxPlayers, creatorId);
       setName('');
       refreshLobbies();
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
     }
   };

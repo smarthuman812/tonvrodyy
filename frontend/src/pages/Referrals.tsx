@@ -17,10 +17,11 @@ const ReferralsPage: React.FC = () => {
   useEffect(() => {
     async function load() {
       try {
-        const profile = await api.getProfile(userId);
-        setCode(profile.referral_code);
-        const refs = await api.getReferrals(userId);
-        setList(refs as unknown as Referral[]);
+        // Cast the returned profile to any so we can access its fields without type errors.
+        const profileData: any = await api.getProfile(userId);
+        setCode(profileData.referral_code);
+        const refsData: any = await api.getReferrals(userId);
+        setList(refsData as Referral[]);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

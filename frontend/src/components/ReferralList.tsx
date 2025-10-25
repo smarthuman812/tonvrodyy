@@ -5,18 +5,10 @@ interface Referral {
   level: number;
 }
 
-interface Props {
-  referrals: Referral[];
-}
-
-/**
- * Component to display a list of referral entries. Each entry shows the child user id and level.
- */
-const ReferralList: React.FC<Props> = ({ referrals }) => {
-  if (referrals.length === 0) {
-    return <p>No referrals yet.</p>;
-  }
-  return (
+const ReferralList: React.FC<{ referrals: Referral[] }> = ({ referrals }) =>
+  referrals.length === 0 ? (
+    <p>No referrals yet.</p>
+  ) : (
     <ul>
       {referrals.map((ref) => (
         <li key={ref.childId}>
@@ -25,6 +17,5 @@ const ReferralList: React.FC<Props> = ({ referrals }) => {
       ))}
     </ul>
   );
-};
 
 export default ReferralList;

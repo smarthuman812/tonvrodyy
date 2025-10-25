@@ -1,19 +1,14 @@
 import React from 'react';
 
-/**
- * Home page of the application. Presents a brief overview of features.
- */
-const Home: React.FC = () => {
-  return (
-    <div>
-      <h1>Welcome to TONRODY</h1>
-      <p>
-        This is a demo decentralized lobby and referral system powered by TON Connect and
-        Telegram WebApp. Use the navigation above to explore lobbies, manage your wallet,
-        invite friends, and view your profile.
-      </p>
-    </div>
-  );
-};
+const Home: React.FC = () => (
+  <div>
+    <h1>Welcome to TONRODY</h1>
+    <p>
+      Это демонстрационный dApp: здесь вы можете создавать лобби,
+      присоединяться к ним, управлять кошельком, приглашать друзей по
+      реферальной ссылке и просматривать свой профиль.
+    </p>
+  </div>
+);
 
 export default Home;
