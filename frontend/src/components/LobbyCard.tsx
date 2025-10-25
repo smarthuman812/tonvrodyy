@@ -1,53 +1,23 @@
-import React, { useState } from 'react';
-import { api } from '../lib/api';
+import { Box } from "@chakra-ui/react";
+import Navbar from "./Navbar";
 
-interface Lobby {
-  id: string;
-  name: string;
-  max_players: number;
-  prize_pool: number;
-  status: string;
-  creator_id: string | null;
-  created_at: string;
-}
-
-const LobbyCard: React.FC<{ lobby: Lobby }> = ({ lobby }) => {
-  const [joining, setJoining] = useState(false);
-
-  const join = async () => {
-    setJoining(true);
-    try {
-      const userId =
-        localStorage.getItem('user_id') ||
-        '00000000-0000-0000-0000-000000000000';
-      await api.joinLobby(lobby.id, userId, 1);
-      alert('Joined lobby successfully');
-    } catch (err) {
-      console.error(err);
-      alert('Failed to join lobby');
-    } finally {
-      setJoining(false);
-    }
-  };
-
+/**
+ * Layout component providing a consistent background and navigation bar.
+ *
+ * Wraps application pages in a gradient background and places the Navbar at
+ * the top. The children are rendered below the navbar with padding.
+ */
+export default function Layout({
+  children,
+  username,
+}: {
+  children: React.ReactNode;
+  username?: string | null;
+}) {
   return (
-    <div
-      style={{
-        border: '1px solid #ccc',
-        padding: '1rem',
-        borderRadius: '6px',
-      }}
-    >
-      <h4>{lobby.name}</h4>
-      <p>
-        Players: {lobby.max_players} | Prize Pool: {lobby.prize_pool}
-      </p>
-      <p>Status: {lobby.status}</p>
-      <button onClick={join} disabled={joining}>
-        {joining ? 'Joining...' : 'Join'}
-      </button>
-    </div>
+    <Box minH="100vh" bgGradient="linear(to-br, #0b0b0b, #111827)">
+      <Navbar username={username} />
+      <Box p={6}>{children}</Box>
+    </Box>
   );
-};
-
-export default LobbyCard;
+}

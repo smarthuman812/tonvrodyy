@@ -1,61 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { api } from '../lib/api';
+import React from "react";
+import { motion } from "framer-motion";
+import { Box, VStack, Text, Button, SimpleGrid } from "@chakra-ui/react";
+import "../styles/visual-layer.css";
 
-interface Referral {
-  childId: string;
-  level: number;
-}
+const MotionBox = motion(Box);
 
-/**
- * Referrals page shows your referral code and users you have referred.
- */
-const ReferralsPage: React.FC = () => {
-  const [code, setCode] = useState<string>('');
-  const [list, setList] = useState<Referral[]>([]);
-  const userId = localStorage.getItem('user_id') || '00000000-0000-0000-0000-000000000000';
-
-  useEffect(() => {
-    async function load() {
-      try {
-        // Cast the returned profile to any so we can access its fields without type errors.
-        const profileData: any = await api.getProfile(userId);
-        setCode(profileData.referral_code);
-        const refsData: any = await api.getReferrals(userId);
-        setList(refsData as Referral[]);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      }
-    }
-    load();
-  }, [userId]);
-
-  const referralLink = code ? `${window.location.origin}?ref=${code}` : '';
-
+const WalletPage: React.FC = () => {
   return (
-    <div>
-      <h2>Your Referrals</h2>
-      {code && (
-        <p>
-          Your referral code: <strong>{code}</strong>
-          <br />
-          Share this link with friends: <br />
-          <a href={referralLink}>{referralLink}</a>
-        </p>
-      )}
-      <h3>Referred Users</h3>
-      {list.length === 0 && <p>No referrals yet.</p>}
-      {list.length > 0 && (
-        <ul>
-          {list.map((r) => (
-            <li key={r.childId}>
-              Child ID: {r.childId} (level {r.level})
-            </li>
+    <Box minH="100vh" p={8}>
+      <VStack spacing={8}>
+        <MotionBox
+          className="card-ton"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          p={8}
+          textAlign="center"
+        >
+          <Text fontSize="3xl" fontWeight="bold" mb={4}>
+            <img src="/icons/ton-logo.svg" className="ton-icon" />
+            Wallet Balance
+          </Text>
+          <Text fontSize="2xl" mb={6}>
+            <span style={{ color: "#00BFFF" }}>15.37 TON</span>
+          </Text>
+          <Button className="neon-glow" w="full" mb={3}>
+            Deposit
+          </Button>
+          <Button variant="outline" className="neon-glow" w="full">
+            Withdraw
+          </Button>
+        </MotionBox>
+
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} w="full">
+          {[
+            { title: "Total Bets", value: "124 TON" },
+            { title: "Total Wins", value: "190 TON" },
+            { title: "Net Profit", value: "+66 TON" },
+          ].map((stat) => (
+            <MotionBox
+              key={stat.title}
+              className="card-ton"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              p={6}
+              textAlign="center"
+            >
+              <Text fontWeight="bold" color="#00BFFF">
+                {stat.title}
+              </Text>
+              <Text fontSize="xl" mt={2}>
+                {stat.value}
+              </Text>
+            </MotionBox>
           ))}
-        </ul>
-      )}
-    </div>
+        </SimpleGrid>
+      </VStack>
+    </Box>
   );
 };
 
-export default ReferralsPage;
+export default WalletPage;

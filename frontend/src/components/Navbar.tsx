@@ -33,7 +33,7 @@ export default function Navbar({ username }: { username?: string | null }) {
         ))}
       </HStack>
       <HStack spacing={4}>
-        {username && <Text fontSize="sm">Hello, {username}</Text>}
+        {username && <Text fontSize="sm">1337, {username}</Text>}
         <TonConnectButton />
       </HStack>
     </Flex>
