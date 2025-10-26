@@ -17,7 +17,7 @@ export default function Layout({
   return (
     <Box minH="100vh" bgGradient="linear(to-br, #0b0b0b, #111827)">
       <Navbar></Navbar>1337 PROJECT{username} / TON MULTIPLICATION
-      <Box p={6}>{children}</Box>
+      <Box p={1}>{children}</Box>
     </Box>
   );
 }

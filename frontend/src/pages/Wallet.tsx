@@ -43,56 +43,42 @@ const Wallet: React.FC = () => {
         bg="rgba(255,255,255,0.04)"
         border="1px solid rgba(0,191,255,0.25)"
         borderRadius="20px"
-        backdropFilter="blur(16px)"
-        boxShadow="0 0 40px rgba(0,191,255,0.15), inset 0 0 20px rgba(255,255,255,0.05)"
+        backdropFilter="blur(100px)"
+        boxShadow="0 0 20px rgba(0,191,255,0.15), inset 0 0 20px rgba(255,255,255,0.05)"
         p={10}
         textAlign="center"
         maxW="650px"
         mx={4}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 980, y: 40 }}
+        animate={{ opacity: 100, y: 500 }}
+        transition={{ duration: 600000 }}
       >
         <VStack spacing={8}>
           <Text
             fontFamily="Orbitron, sans-serif"
-            fontSize={{ base: "2xl", md: "3xl" }}
+            fontSize={{ base: "1xl", md: "1xl" }}
             fontWeight="bold"
             color="cyan.300"
-            textShadow="0 0 12px rgba(0,255,255,0.6)"
+            textShadow="0 0 12px rgba(255, 255, 255, 0.6)"
           >
-            TON ENERGY CORE
+            TON CORE
           </Text>
 
           <Box>
             <Text
-              fontSize={{ base: "4xl", md: "5xl" }}
-              color="cyan.200"
+              fontSize={{ base: "4x1", md: "8x151" }}
+              color="ton.200"
               textShadow="0 0 20px rgba(0,255,255,0.7)"
               fontWeight="bold"
             >
               {balance.toFixed(2)} TON
             </Text>
             <Text color="whiteAlpha.700" fontSize="sm" mt={1}>
-              Current Reactor Charge
+              Current Balance Charge
             </Text>
           </Box>
 
-          <Progress
-            value={(balance / 30) * 100}
-            size="lg"
-            colorScheme="cyan"
-            borderRadius="10px"
-            bg="rgba(255,255,255,0.05)"
-            w="80%"
-            sx={{
-              "& > div": {
-                background:
-                  "linear-gradient(90deg, rgba(0,191,255,0.8), rgba(0,255,255,0.6))",
-                boxShadow: "0 0 20px rgba(0,255,255,0.3)",
-              },
-            }}
-          />
+        
 
           <HStack spacing={6} pt={4}>
             <Button
@@ -111,7 +97,7 @@ const Wallet: React.FC = () => {
                 transition: "0.3s",
               }}
             >
-              Deposit Fuel
+              Deposit
             </Button>
             <Button
               size="lg"
@@ -124,12 +110,12 @@ const Wallet: React.FC = () => {
               py={6}
               _hover={{
                 transform: "scale(1.05)",
-                borderColor: "rgba(0,191,255,0.6)",
+                borderColor: "rgba(0, 191, 255, 0.6)",
                 color: "cyan.200",
                 transition: "0.3s",
               }}
             >
-              Withdraw Energy
+              Withdraw
             </Button>
           </HStack>
 

@@ -102,7 +102,7 @@ const HomePage: React.FC = () => {
           <Table variant="simple" colorScheme="ton" size="sm" className="table-wrapper">
             <Tbody>
               <Tr><Td>Contract Address</Td><Td color="#00BFFF">EQB3X4d2GqLz...Fa4</Td></Tr>
-              <Tr><Td>Network</Td><Td>Mainnet</Td></Tr>
+              <Tr><Td>Network</Td><Td>testnet</Td></Tr>
               <Tr><Td>Total Rounds</Td><Td>183</Td></Tr>
               <Tr><Td>Total Volume</Td><Td>≈ 9 400 TON</Td></Tr>
             </Tbody>
@@ -115,10 +115,7 @@ const HomePage: React.FC = () => {
             </Button>
             {/* Button to trigger wallet connection. When clicked it
                 opens the TON Connect modal via handleConnect. */}
-            <Button className="neon-glow" onClick={handleConnect}>
-              Connect Wallet
-            </Button>
-          </HStack>
+            </HStack>
         </MotionBox>
 
         <MotionBox
@@ -136,7 +133,7 @@ const HomePage: React.FC = () => {
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
             {[
               { title: "Telegram Community", link: "https://t.me/tonrody" },
-              { title: "X / Twitter Updates", link: "https://x.com" },
+              { title: "BIG NACHO", link: "https://t.me/durov" },
               { title: "Docs & Roadmap", link: "#" },
             ].map((item) => (
               <MotionBox

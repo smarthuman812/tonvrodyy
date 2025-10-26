@@ -15,9 +15,9 @@ export default function Layout({
   username?: string | null;
 }) {
   return (
-    <Box minH="100vh" bgGradient="linear(to-br, #0b0b0b, #111827)">
+    <Box minH="1100vh" bgGradient="linear(to-br, #0b0b0b, #111827)">
       <Navbar username={username} />
-      <Box p={6}>{children}</Box>
+      <Box p={41}>{children}</Box>
     </Box>
   );
 }

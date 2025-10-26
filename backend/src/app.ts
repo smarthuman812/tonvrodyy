@@ -8,6 +8,7 @@ import lobbyRoutes from './routes/lobby';
 import referralRoutes from './routes/referrals';
 import tonRoutes from './routes/ton';
 import profileRoutes from './routes/profile';
+import userRouter from "./routes/user";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -32,7 +33,7 @@ app.use('/api/lobby', lobbyRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/ton', tonRoutes);
 app.use('/api/profile', profileRoutes);
-
+app.use("/api/user", userRouter);
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
