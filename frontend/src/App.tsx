@@ -8,8 +8,7 @@ import Profile from "./pages/Profile";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Layout>
+          <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lobby" element={<Lobby />} />
@@ -17,8 +16,7 @@ const App = () => {
           <Route path="/referrals" element={<Referrals />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
-      </Layout>
-    </BrowserRouter>
+      </Layout>    
   );
 };
 
